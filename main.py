@@ -1,3 +1,4 @@
+print("🚀 Deploying Wildy Bot version 2.0")
 from flask import Flask
 import threading
 
