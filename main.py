@@ -120,12 +120,16 @@ async def before_loop():
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user} — tracking {len(guilds_cfg)} servers.")
-    await asyncio.sleep(5)  # wait a few seconds for Discord to be ready
+    await asyncio.sleep(5)  # wait a few seconds before syncing
+
     try:
         synced = await bot.tree.sync()
         print(f"✅ Synced {len(synced)} slash commands with Discord.")
+        for cmd in synced:
+            print(f" → /{cmd.name} — {cmd.description}")
     except Exception as e:
         print(f"❌ Command sync error: {e}")
+
     hourly_update.start()
 
 import os
