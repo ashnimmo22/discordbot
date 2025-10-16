@@ -53,9 +53,9 @@ async def fetch_event():
     return None
 
 def make_embed(data):
-    cur = data.get("current_event", "Unknown")
-    nxt = data.get("next_event", "Unknown")
-    nxt_time = data.get("next_event_time", "")
+    cur = data.get("current", "Unknown")
+    nxt = data.get("next", "Unknown")
+    nxt_time = data.get("next_time", "")
     try:
         t = datetime.fromisoformat(nxt_time.replace("Z", "+00:00"))
         formatted = t.strftime("%H:%M UTC")
