@@ -18,7 +18,7 @@ from discord.ext import commands, tasks
 import aiohttp, asyncio, json
 from datetime import datetime, timezone
 
-EVENT_API = "https://wilderness.spegal.dev/api/events"
+EVENT_API = "https://wilderness.spegal.dev/api/"
 CONFIG_FILE = "guild_config.json"
 
 # ---- Helper functions --------------------------------------------------------
