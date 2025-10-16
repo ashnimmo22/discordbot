@@ -36,9 +36,20 @@ def save_config(data):
 
 async def fetch_event():
     async with aiohttp.ClientSession() as s:
-        async with s.get(EVENT_API) as r:
-            if r.status == 200:
-                return await r.json()
+        try:
+            async with s.get(EVENT_API) as r:
+                if r.status == 200:
+                    # Try JSON parsing safely
+                    try:
+                        return await r.json(content_type=None)
+                    except Exception:
+                        text = await r.text()
+                        print(f"[fetch_event] Non-JSON response: {text[:200]}...")
+                        return None
+                else:
+                    print(f"[fetch_event] HTTP error {r.status}")
+        except Exception as e:
+            print(f"[fetch_event] Exception: {e}")
     return None
 
 def make_embed(data):
