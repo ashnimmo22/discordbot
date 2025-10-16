@@ -64,8 +64,8 @@ guilds_cfg = load_config()
 
 # ---- Slash commands ----------------------------------------------------------
 
-@bot.tree.command(description="Enable Wildy event notifications in this channel")
-async def enable(interaction: discord.Interaction):
+@bot.tree.command(name="wildy_enable", description="Enable Wildy event notifications in this channel")
+async def wildy_enable(interaction: discord.Interaction):
     guild_id = str(interaction.guild_id)
     guilds_cfg[guild_id] = {
         "channel_id": interaction.channel_id,
@@ -74,16 +74,16 @@ async def enable(interaction: discord.Interaction):
     save_config(guilds_cfg)
     await interaction.response.send_message("✅ Notifications enabled in this channel.", ephemeral=True)
 
-@bot.tree.command(description="Stop Wildy event notifications for this server")
-async def stop(interaction: discord.Interaction):
+@bot.tree.command(name="wildy_stop", description="Stop Wildy event notifications for this server")
+async def wildy_stop(interaction: discord.Interaction):
     guild_id = str(interaction.guild_id)
     if guild_id in guilds_cfg:
         guilds_cfg[guild_id]["enabled"] = False
         save_config(guilds_cfg)
     await interaction.response.send_message("🛑 Notifications disabled.", ephemeral=True)
 
-@bot.tree.command(description="Send an immediate Wildy event update")
-async def notify(interaction: discord.Interaction):
+@bot.tree.command(name="wildy_notify", description="Send an immediate Wildy event update")
+async def wildy_notify(interaction: discord.Interaction):
     data = await fetch_event()
     if not data:
         await interaction.response.send_message("⚠️ Could not fetch event data.", ephemeral=True)
