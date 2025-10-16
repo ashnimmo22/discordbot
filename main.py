@@ -96,16 +96,15 @@ async def wildy_stop(interaction: discord.Interaction):
 
 @bot.tree.command(name="wildy_notify", description="Send an immediate Wildy event update")
 async def wildy_notify(interaction: discord.Interaction):
-    print("DEBUG: wildy_notify command called")
+    await interaction.response.defer(ephemeral=True)  # Acknowledge early, to avoid timeout
+
     data = await fetch_event()
     if not data:
-        print("DEBUG: fetch_event returned None or failed")
-        await interaction.response.send_message("⚠️ Could not fetch event data.", ephemeral=True)
+        await interaction.followup.send("⚠️ Could not fetch event data.", ephemeral=True)
         return
 
-    print("DEBUG: API Data =", data)
     embed = make_embed(data)
-    await interaction.response.send_message(embed=embed)
+    await interaction.followup.send(embed=embed, ephemeral=True)
 
 # ---- Scheduled hourly updater ------------------------------------------------
 
