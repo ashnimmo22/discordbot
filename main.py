@@ -96,13 +96,14 @@ async def wildy_stop(interaction: discord.Interaction):
 
 @bot.tree.command(name="wildy_notify", description="Send an immediate Wildy event update")
 async def wildy_notify(interaction: discord.Interaction):
+    print("DEBUG: wildy_notify command called")
     data = await fetch_event()
     if not data:
+        print("DEBUG: fetch_event returned None or failed")
         await interaction.response.send_message("⚠️ Could not fetch event data.", ephemeral=True)
         return
 
-    print("DEBUG: API Data =", data)  # Add this to check data structure
-
+    print("DEBUG: API Data =", data)
     embed = make_embed(data)
     await interaction.response.send_message(embed=embed)
 
