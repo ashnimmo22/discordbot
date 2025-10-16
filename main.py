@@ -1,3 +1,17 @@
+from flask import Flask
+import threading
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Wildy Bot is running!"
+
+def run_web():
+    app.run(host='0.0.0.0', port=8080)
+
+threading.Thread(target=run_web).start()
+
 import discord
 from discord.ext import commands, tasks
 import aiohttp, asyncio, json
