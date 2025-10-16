@@ -100,6 +100,9 @@ async def wildy_notify(interaction: discord.Interaction):
     if not data:
         await interaction.response.send_message("⚠️ Could not fetch event data.", ephemeral=True)
         return
+
+    print("DEBUG: API Data =", data)  # Add this to check data structure
+
     embed = make_embed(data)
     await interaction.response.send_message(embed=embed)
 
